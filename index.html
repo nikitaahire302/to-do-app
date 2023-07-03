@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+       .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input-container input,
+.input-container textarea {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.task-list {
+    border: 1px solid #a0d3ea;
+    padding: 10px;
+}
+
+.task-header {
+    color: darkmagenta;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.task-header span {
+    color: darkmagenta;
+    flex-basis: 33%;
+    text-align: center;
+}
+
+.task-item {
+    color: rgb(19, 19, 20);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.task-item span {
+    flex-basis: 33%;
+    text-align: center;
+}
+
+.delete-btn {
+    color: red;
+    cursor: pointer;
+}
+ 
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-container">
+            <input type="text" id="task-title" placeholder="Title">
+            <textarea id="task-description" placeholder="Description"></textarea>
+            <button id="save-btn" onclick="saveTask()">Save</button>
+        </div>
+        <div class="task-list">
+            <div class="task-header">
+                <span>Title</span>
+                <span>Description</span>
+                <span>Delete</span>
+            </div>
+            <hr>
+            <div id="task-items"></div>
+        </div>
+    </div>
+    <script>
+        function saveTask() {
+    const title = document.getElementById('task-title').value;
+    const description = document.getElementById('task-description').value;
+
+    if (title.trim() === '' || description.trim() === '') {
+        alert('Please enter a title and description for the task.');
+        return;
+    }
+
+    const taskItem = createTaskItem(title, description);
+    document.getElementById('task-items').appendChild(taskItem);
+
+    document.getElementById('task-title').value = '';
+    document.getElementById('task-description').value = '';
+}
+
+function createTaskItem(title, description) {
+    const taskItem = document.createElement('div');
+    taskItem.classList.add('task-item');
+
+    const titleSpan = document.createElement('span');
+    titleSpan.textContent = title;
+
+    const descriptionSpan = document.createElement('span');
+    descriptionSpan.textContent = description;
+
+    const deleteSpan = document.createElement('span');
+    deleteSpan.innerHTML = '&#10060;';
+    deleteSpan.classList.add('delete-btn');
+    deleteSpan.addEventListener('click', function () {
+        taskItem.remove();
+    });
+
+    taskItem.appendChild(titleSpan);
+    taskItem.appendChild(descriptionSpan);
+    taskItem.appendChild(deleteSpan);
+
+    return taskItem;
+}
+
+    </script>
+
+    
+</body>
+
+</html>
